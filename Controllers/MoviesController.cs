@@ -20,23 +20,14 @@ namespace MvcMovie.Controllers
         }
 
         // GET: Movies
-        public async Task<IActionResult> Index(string movieGenre, string searchString)
+        public async Task<IActionResult> Index(string movieGenre, string searchString, int? movieYear)
         {
-            if (_context.Movie == null)
-            {
-                return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
-            }
-
-            // Use LINQ to get list of genres.
-            IQueryable<string> genreQuery = from m in _context.Movie
-                                            orderby m.Genre
-                                            select m.Genre;
-            var movies = from m in _context.Movie
-                         select m;
+            IQueryable<Movie> movies = from m in _context.Movie
+                                       select m;
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                movies = movies.Where(s => s.Title!.ToUpper().Contains(searchString.ToUpper()));
+                movies = movies.Where(s => s.Title!.Contains(searchString));
             }
 
             if (!string.IsNullOrEmpty(movieGenre))
@@ -44,10 +35,29 @@ namespace MvcMovie.Controllers
                 movies = movies.Where(x => x.Genre == movieGenre);
             }
 
+            if (movieYear.HasValue)
+            {
+                movies = movies.Where(m => m.ReleaseDate.Year >= movieYear.Value);
+            }
+
+            var genreQuery = from m in _context.Movie
+                             orderby m.Genre
+                             select m.Genre;
+
+            var years = await _context.Movie
+                .Select(m => m.ReleaseDate.Year)
+                .Distinct()
+                .OrderBy(y => y)
+                .ToListAsync();
+
             var movieGenreVM = new MovieGenreViewModel
             {
+                Movies = await movies.ToListAsync(),
                 Genres = new SelectList(await genreQuery.Distinct().ToListAsync()),
-                Movies = await movies.ToListAsync()
+                MovieGenre = movieGenre,
+                SearchString = searchString,
+                MovieYear = movieYear,
+                Years = new SelectList(years, movieYear)
             };
 
             return View(movieGenreVM);
