@@ -6468,11 +6468,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\MOFFAT\\Music\\W02-Projects\\MvcMovie\\MvcMovie.csproj",
+      "projectUniqueName": "c:\\Users\\MOFFAT\\Music\\W02-Projects\\MvcMovie\\MvcMovie.csproj",
       "projectName": "MvcMovie",
-      "projectPath": "C:\\Users\\MOFFAT\\Music\\W02-Projects\\MvcMovie\\MvcMovie.csproj",
+      "projectPath": "c:\\Users\\MOFFAT\\Music\\W02-Projects\\MvcMovie\\MvcMovie.csproj",
       "packagesPath": "C:\\Users\\MOFFAT\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\MOFFAT\\Music\\W02-Projects\\MvcMovie\\obj\\",
+      "outputPath": "c:\\Users\\MOFFAT\\Music\\W02-Projects\\MvcMovie\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\MOFFAT\\AppData\\Roaming\\NuGet\\NuGet.Config"
